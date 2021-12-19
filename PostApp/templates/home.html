@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block alertmsgs %}
+{% if messages %}
+{% for msg in messages %}
+<div class="alert alert-{% if msg.tags == "error" %}danger alert-danger alert-dismissible fade show {% else %} {{ msg.tags }} alert-{{ msg.tags }} alert-dismissible fade show {% endif %}"
+    role="alert">
+    <strong>Holy guacamole!</strong> {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock alertmsgs %}
+
+{% block body %}
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="text-center alert alert-info">Add Post</h4>
+            <form action="{% url 'create_post' %}" method="post" id="myform">
+                {% csrf_token %}
+                <input type="hidden" name="batchid" id="batchid" />
+                <div class="form-group">
+                    <label class="mb-2" for="exampleFormControlTextarea1">Write Something</label>
+                    <textarea class="form-control" name="ftext" id="exampleFormControlTextarea1" rows="5"></textarea>
+                </div>
+                <div class="pt-3">
+                    <button type="submit" id="btnsave" class="btn btn-success">Save</button>
+                </div>
+            </form>
+            <div id="msg" class="alert alert-danger my-2" style="display: none"></div>
+        </div>
+        <div class="col">
+            <h4 class="text-center alert alert-info">Post List</h4>
+            <table class="table table-scrollable">
+                <thead>
+                    <tr>
+                        <th scope="col">Post No.</th>
+                        <th scope="col" class="text-start">Post</th>
+                        <th scope="col" class="text-center">Post Created</th>
+                        <th scope="col" class="text-center">Controls</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% if post %}
+                    {% for data in post %}
+                    <tr class="align-middle">
+                        <td scope="row">{{forloop.counter}}</td>
+                        <td class="text-start">{{data.text|truncatewords:4}}</td>
+                        <td class="text-center">{{data.created_at}}</td>
+                        <td class="col-sm-3 text-center">
+                            <a class="btn btn-warning me-2 edit_btn" data-sid="{{data.id}}"
+                                href="{% url 'post_detail' data.id %}">
+                                View
+                            </a>
+                            <a class="btn btn-danger del_btn" data-sid="{{data.id}}"
+                                href="{% url 'delete_post' data.id %}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>No data Found</tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
