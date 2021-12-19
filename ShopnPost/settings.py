@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "ShopApp",
+    "ShopApp.apps.ShopappConfig",
     "PostApp",
 ]
 
@@ -79,9 +79,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+
+    'post': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'shop': {
+        'NAME': 'shop',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'PASSWORD': 'shri',
+        'PORT': 3306
+    },
 }
 
+DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',
+                    'routers.db_routers.ShopRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
