@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    ''
+    'customerapp',
+    'productapp',
+    'sellerapp',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -79,18 +83,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    },
-
-    'post': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'shop': {
-        'NAME': 'shop',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'shri',
-        'PORT': 3306
     },
 }
 
